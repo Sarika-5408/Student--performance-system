@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* ============================================================
    index.css — Global Styles
    AI-Powered Student Performance Enhancement System
@@ -820,3 +821,19 @@ canvas{
     background:#dcfce7 !important;
     color:#16a34a !important;
 }
+=======
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+    
+
+/* 🔥 GLASS CARD */
+.glass-card {
+  @apply bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-lg;
+}
+
+/* 🔥 INPUT STYLE */
+.input {
+  @apply w-full p-3 mb-3 rounded-xl bg-white/20 text-white placeholder-gray-300 outline-none focus:ring-2 focus:ring-purple-400 focus:bg-white/30 transition;
+}
+>>>>>>> f6dccccc82e5c7c8fd6ad99cab63c85766a9432a

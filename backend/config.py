@@ -4,10 +4,15 @@ from datetime import timedelta
 
 class Config:
     # ── Database ──────────────────────────────────────────────
-    SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL",
-        "mysql+pymysql://root:sisa2505@localhost/student_performance"
-    )
+    database_url = os.getenv(
+    "DATABASE_URL",
+    "mysql+pymysql://root:sisa2505@localhost/student_performance"
+)
+
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
+
+SQLALCHEMY_DATABASE_URI = database_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # ── JWT ───────────────────────────────────────────────────

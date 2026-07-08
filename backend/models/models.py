@@ -10,7 +10,11 @@ class User(db.Model):
     id            = db.Column(db.Integer, primary_key=True)
     username      = db.Column(db.String(50), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    role          = db.Column(db.Enum("admin", "student"), nullable=False, default="student")
+    role = db.Column(
+    db.Enum("admin", "student", name="user_role"),
+    nullable=False,
+    default="student"
+)
     roll_no       = db.Column(db.String(20), db.ForeignKey("students.roll_no"), nullable=True)
     created_at    = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -60,7 +64,10 @@ class Mark(db.Model):
     roll_no     = db.Column(db.String(20), db.ForeignKey("students.roll_no"), nullable=False)
     subject     = db.Column(db.String(100), nullable=False)
     mark        = db.Column(db.Numeric(5, 2), nullable=False)
-    exam_type   = db.Column(db.Enum("internal1", "internal2", "final"), default="final")
+    exam_type = db.Column(
+    db.Enum("internal1", "internal2", "final", name="exam_type"),
+    default="final"
+)
     recorded_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):
@@ -105,8 +112,14 @@ class ImprovementPlan(db.Model):
     roll_no        = db.Column(db.String(20), db.ForeignKey("students.roll_no"), nullable=False)
     weakness       = db.Column(db.Text, nullable=False)
     recommendation = db.Column(db.Text, nullable=False)
-    priority       = db.Column(db.Enum("low", "medium", "high"), default="medium")
-    status         = db.Column(db.Enum("pending", "in_progress", "completed"), default="pending")
+    priority = db.Column(
+    db.Enum("low", "medium", "high", name="priority_type"),
+    default="medium"
+)
+    status = db.Column(
+    db.Enum("pending", "in_progress", "completed", name="status_type"),
+    default="pending"
+)
     created_date   = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):

@@ -12,6 +12,8 @@ from routes.recommendations import recommendations_bp
 from routes.reports import reports_bp
 from routes.dashboard import dashboard_bp
 
+from models.models import User
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -33,7 +35,7 @@ def create_app(config_class=Config):
         print("MISSING TOKEN:", error)
         return {"error": error}, 401
 
-    # DB
+    # Database
     db.init_app(app)
 
     # Blueprints
@@ -51,6 +53,19 @@ def create_app(config_class=Config):
 
     with app.app_context():
         db.create_all()
+
+        # Create default admin user if it doesn't exist
+        admin = User.query.filter_by(username="admin").first()
+
+        if not admin:
+            admin = User(
+                username="admin",
+                role="admin"
+            )
+            admin.set_password("Admin@123")
+            db.session.add(admin)
+            db.session.commit()
+            print("✅ Default admin user created")
 
     return app
 

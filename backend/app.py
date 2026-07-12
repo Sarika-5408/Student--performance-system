@@ -11,7 +11,7 @@ from routes.attendance import attendance_bp
 from routes.recommendations import recommendations_bp
 from routes.reports import reports_bp
 from routes.dashboard import dashboard_bp
-
+from sample_data import seed_database
 from models.models import User
 
 
@@ -53,15 +53,12 @@ def create_app(config_class=Config):
 
     with app.app_context():
         db.create_all()
-
+        seed_database(db)
         # Create default admin user if it doesn't exist
         admin = User.query.filter_by(username="admin").first()
 
         if not admin:
-            admin = User(
-                username="admin",
-                role="admin"
-            )
+            admin = User(username="admin",role="admin")
             admin.set_password("Admin@123")
             db.session.add(admin)
             db.session.commit()
